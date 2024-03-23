@@ -36,7 +36,7 @@ const themeSetting = (mode) =>
 						active: "#E3E8F2",
 					},
 					background: {
-						default: "#F7FAFA",
+						primary: "#F7FAFA",
 					},
 					border: {
 						primary: "#D4DBE8",
@@ -74,7 +74,21 @@ export const modeSetting = () => {
 	);
 
 	const theme = useMemo(() => {
-		return createTheme(themeSetting(mode));
+		return createTheme({
+			components: {
+				MuiDrawer: {
+					styleOverrides: {
+						// this will only apply to drawer modals
+						modal: {
+							".MuiModal-backdrop": {
+								background: "none",
+							},
+						},
+					},
+				},
+			},
+			...themeSetting(mode),
+		});
 	}, [mode]);
 
 	return [themeMode, theme];
